@@ -9,13 +9,15 @@ from django.contrib import messages
 from datetime import datetime
 import logging
 import json
+from .restapi import get_dealers_from_cf, get_dealer_reviews_from_cf, post_request
+from .models import CarDealer
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
 
 # Create your views here.
-
+user_is_logged_in = False
 
 # Create an `about` view to render a static about page
 def about(request):
@@ -40,6 +42,7 @@ def login_request(request):
         if user is not None:
             # If user is valid, call login method to login current user
             login(request, user)
+            user_is_logged_in = True
             return redirect('djangoapp:index')
         else:
             # If not, return to login page again
@@ -53,6 +56,7 @@ def logout_request(request):
     print("Log out the user `{}`".format(request.user.username))
     # Logout user in the request
     logout(request)
+    user_is_logged_in = False
     # Redirect user back to course list view
     return redirect('djangoapp:index')
 
@@ -94,12 +98,40 @@ def get_dealerships(request):
     if request.method == "GET":
         return render(request, 'djangoapp/index.html', context)
 
+    # if request.method == "GET":
+    #     url = "https://13043c39.eu-de.apigw.appdomain.cloud/dealership/api/dealership"
+    #     # Get dealers from the URL
+    #     dealerships = get_dealers_from_cf(url)
+    #     # Concat all dealer's short name
+    #     dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+    #     # Return a list of dealer short name
+    #     return HttpResponse(dealer_names)
+
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
-# def get_dealer_details(request, dealer_id):
-# ...
+def get_dealer_details(request, dealer_id):
+    if request.method == "GET":
+        url = "https://13043c39.eu-de.apigw.appdomain.cloud/review/api/review?id=" + str(dealer_id)
+        # Get dealers from the URL
+        reviews = get_dealer_reviews_from_cf(url)
+        # Concat all dealer's short name
+        # review_list = ' '.join([review for review in reviews])
+        # Return a list of dealer short name
+        return HttpResponse(reviews)
 
 # Create a `add_review` view to submit a review
-# def add_review(request, dealer_id):
-# ...
+def add_review(request, dealer_id):
+    context = {}
+    if user_is_logged_in == True:
+        review["time"] = datetime.utcnow().isoformat()
+        review["dealership"] = 11
+        review["review"] = "This is a great car dealer"
+        review["id"] = dealer_id
+        review["name"] = "Alireza Javid"
+        json_payload["review"] = review
+        url = "https://13043c39.eu-de.apigw.appdomain.cloud/review/api/review?id=" + str(dealer_id)
+        post_request(url, json_payload)
+
+    return render(request, 'djangoapp/index.html', context)
+    
 
