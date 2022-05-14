@@ -51,19 +51,24 @@ def get_dealer_reviews_from_cf(url, **kwargs):
     json_result = get_request(url)
     if json_result:
         # Get the row list in JSON as dealers
-        reviews = json_result['body']['docs']
-        # For each dealer object
-        for review_doc in reviews:
-            # Get its content in `doc` object
-            # review_doc = review
-            # review_doc = 
-            # Create a CarDealer object with values in `doc` object
-            review_obj = DealerReview(id=review_doc["id"], dealership=review_doc["dealership"], name=review_doc["name"],
-                                   purchase=review_doc["purchase"], review=review_doc["review"], purchase_date=review_doc["purchase_date"],
-                                   car_make=review_doc["car_make"],
-                                   car_year=review_doc["car_year"], car_model=review_doc["car_model"])
-            # review_obj.sentiment = analyze_review_sentiments(review_obj.review)
-            results.append(review_obj)
+        reviews = json_result['body']["docs"]
+        if reviews:
+            # For each dealer object
+            for i in [1]:
+                # Get its content in `doc` object
+                review_doc = reviews[0]
+                # review_doc = 
+                # Create a CarDealer object with values in `doc` object
+                try:
+                    review_obj = DealerReview(id=review_doc["id"], dealership=review_doc["dealership"], name=review_doc["name"],
+                                    purchase=review_doc["purchase"], review=review_doc["review"], purchase_date=review_doc["purchase_date"],
+                                    car_make=review_doc["car_make"],
+                                    car_year=review_doc["car_year"], car_model=review_doc["car_model"])
+                except:
+                    review_obj = DealerReview(id=review_doc["id"], dealership=review_doc["dealership"],
+                                    purchase=review_doc["purchase"], review=review_doc["review"])    
+                # review_obj.sentiment = analyze_review_sentiments(review_obj.review)
+                results.append(review_obj)
 
     return results
 

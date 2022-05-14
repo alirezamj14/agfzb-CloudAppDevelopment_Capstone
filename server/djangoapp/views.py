@@ -106,7 +106,7 @@ def get_dealerships(request):
 def get_dealer_details(request, dealer_id):
     context = {}
     if request.method == "GET":
-        url = "https://13043c39.eu-de.apigw.appdomain.cloud/review/api/review?id=" + str(dealer_id)
+        url = "https://13043c39.eu-de.apigw.appdomain.cloud/review/api/review?dealerid=" + str(dealer_id)
         reviews = get_dealer_reviews_from_cf(url)
         context["reviews"] = reviews
         context["dealer_id"] = dealer_id
