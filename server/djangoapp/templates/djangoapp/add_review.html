@@ -13,6 +13,7 @@
     <body>
     <!--Add review form here -->
     <form action="{% url 'djangoapp:add_review' dealer_id %}" method="post">
+        {% csrf_token %}
         <label for="content">Enter the review contect:</label>
         <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
 
@@ -30,7 +31,6 @@
 
         <input class="date-own form-control" type="text" name="purchasedate" id="purchasedate">
           <div>
-              {% csrf_token %}
               <button class="button" type="submit">Submit</button>
           </div>
       </form>
