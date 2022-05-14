@@ -27,9 +27,9 @@ DEBUG = True
 
 APPEND_SLASH = True
 
-ALLOWED_HOSTS = ["localhost", "localhost:8000", "http://alirezamj14.eu-de.mybluemix.net","https://alirezamj14-8000.theiadocker-2-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai"]
+ALLOWED_HOSTS = ["localhost", "localhost:8000", "https://alirezamj14.eu-de.mybluemix.net","https://alirezamj14-8000.theiadocker-2-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai"]
 
-CSRF_TRUSTED_ORIGINS = ['https://alirezamj14-8000.theiadocker-2-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',"http://alirezamj14.eu-de.mybluemix.net",'https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://alirezamj14-8000.theiadocker-2-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',"https://alirezamj14.eu-de.mybluemix.net",'https://*.127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
